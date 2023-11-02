@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Servidor </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        background-color: #424242;
+      }
+      h1{
+        color: #A52A2A;
+        text-shadow: 3px 3px 4px #000000;
+        padding: 3px;
+      }
+      h2{
+        background-color: rgb(47, 47, 47);
+        color: white;
+        padding:2px;
+        margin: 0;
+      }
+      h4{
+        color: white;
+      }
+      p{
+        color: white;
+        font-size: 1.7rem;
+      }
+    .container {
+        max-width: 1000px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+      }
+      .container0{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+        padding-top: 20px;
+        gap: 2rem;  
+      }
+      .cajaAlarmas{  
+        display: flex;
+        justify-content:center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .cajaPpal{
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+     }
+     .cajasSecundarias{
+        border: 5px solid #424242; 
+        background-color: #43614a; 
+        width:150px;
+        height: 45px;
+        border-radius: 20px;
+     }
+     button {
+        width: 150px;
+        height: 50px;
+        background: #424242;
+        border: none;
+        border-radius: 10px;
+        box-shadow: -3px -3px 5px rgba(158, 197, 233, 0.5),
+                      3px 3px 5px rgba(0,0,0, .25);
+        color: white;
+        font-size: 1.7rem;
+      }
+    .switch-holder {
+      display: flex;
+      width: 220px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow:-3px -3px 5px rgba(213, 215, 216, 0.5),
+                  3px 3px 5px rgba(0,0,0, .25);
+                  inset: 8px 8px 15px rgba(122, 120, 120, 0.7),
+                  inset 10px 10px 10px rgba(0,0,0, .3);
+      justify-content: space-between;
+      align-items: center;
+    }
+    .switch-toggle {
+      height: 40px;
+    }
+    .switch-toggle input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      z-index: -2;
+    }
+    .switch-toggle input[type="checkbox"] + label {
+      position: relative;
+      display: inline-block;
+      width: 100px;
+      height: 40px;
+      border-radius: 20px;
+      margin: 0;
+      cursor: pointer;
+      box-shadow: inset -8px -8px 15px rgba(163, 154, 154, 0.6),
+                inset 10px 10px 10px rgba(0,0,0, .25);
+    }
+    .switch-toggle input[type="checkbox"] + label::before {
+      position: absolute;
+      content: 'OFF';
+      font-size: 13px;
+      text-align: center;
+      line-height: 25px;
+      top: 8px;
+      left: 8px;
+      width: 45px;
+      height: 25px;
+      border-radius: 20px;
+      background-color: #d1dad3;
+      box-shadow: -3px -3px 5px rgba(255,255,255,.5),
+                  3px 3px 5px rgba(0,0,0, .25);
+      transition: .3s ease-in-out;
+    }
+    .switch-toggle input[type="checkbox"]:checked + label::before {
+      left: 50%;
+      content: 'ON';
+      color: #fff;
+      background-color: #00b33c;
+      box-shadow: -3px -3px 5px rgba(255,255,255,.5),
+                  3px 3px 5px #00b33c;
+    }
+  </style>
+  </head>
+  <body>
+    <center>
+      <h1>FORT Security</h1> 
+      <hr style="height: 2px;width: 30%;background-color: rgb(58, 57, 57);">
+      <div class="container0" >
+        <div class="switch-holder">
+            <div class="switch-label">
+                <p>Sirena</p>
+            </div>
+            <div class="switch-toggle">
+              <input type="checkbox" id="sirena2">
+              <label for="sirena2"></label>
+          </div>
+        </div>
+        <div class="switch-holder">
+            <div class="switch-label">
+                <p>Reflector</p>
+            </div>
+            <div class="switch-toggle">
+                <input type="checkbox" id="reflector2">
+                <label for="reflector2"></label>
+            </div>
+        </div>
+      </div>
+      <div class="cajaAlarmas" >
+        <div class="cajaPpal">
+          <button id="z1" >Zona 1</button>  
+          <button id="z2">Zona 2</button>
+          <button id="z3">Zona 3</button>
+          <button id="z4">Zona 4</button>
+        </div>
+        <br>
+        <div class="cajaPpal">
+            <button id="z5">Zona 5</button>  
+            <button id="z6">Zona 6</button>
+            <button id="z7">Zona 7</button>
+            <button id="z8">Zona 8</button>
+          </div>
+      </div>
+      <br>
+      <hr style="height: 2px;width: 40%;background-color: rgb(58, 57, 57);">
+      <div>
+        <a href="https://invelectronica.com/seguridad-perimetral/" target="_blank" rel="noreferrer noopener" style="font-size: 25px;color: rgb(64, 131, 233);text-shadow: 3px 3px 4px #000000;">www.invelectronica.com</a>
+      </div>
+      <p>Modelo Q-CH0-2 / 2023 </p>
+  </div>
+  </center>
+    <script>
+      const Sirena = document.querySelector("#sirena2");
+      const Reflector = document.querySelector("#reflector2");
+      const z1=document.querySelector("#z1");
+      
+      Sirena.addEventListener("click",function(){
+        var vlrSirena=Sirena.checked;
+        if(vlrSirena){
+          vlrSirena="lon";
+        }else{
+          vlrSirena="lof";
+        }
+        consultaGET(vlrSirena);
+    });
+      Reflector.addEventListener("click",function(){
+        var vlrReflector=Reflector.checked;  
+        if(vlrReflector){
+          vlrReflector="ron"
+        }else{
+          vlrReflector="rof"  
+        }
+        consultaGET(vlrReflector);
+    });
+    function consultaGET(consulta){
+        const Http = new XMLHttpRequest();
+        console.log(`Consultando  ${consulta}`)
+        Http.open("GET", consulta);
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+          console.log(Http.status );
+          console.log(Http.responseText);
+        };
+    };
+    </script>
+  </body>
+</html>
