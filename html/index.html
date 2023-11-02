@@ -156,7 +156,7 @@
       </div>
       <div class="cajaAlarmas" >
         <div class="cajaPpal">
-          <button id="z1" >Zona 1</button>  
+          <button id="z1" style="background-color: green;">Zona 1</button>  
           <button id="z2">Zona 2</button>
           <button id="z3">Zona 3</button>
           <button id="z4">Zona 4</button>
@@ -200,8 +200,17 @@
         }
         consultaGET(vlrReflector);
     });
+
+    function cambiocolor (){
+      if (respuesta=="verde"){
+        z1.style="background-color:green";
+      }
+    };
+
+
     function consultaGET(consulta){
         const Http = new XMLHttpRequest();
+        
         console.log(`Consultando  ${consulta}`)
         Http.open("GET", consulta);
         Http.send();
@@ -209,6 +218,8 @@
         Http.onreadystatechange = (e) => {
           console.log(Http.status );
           console.log(Http.responseText);
+        
+          console.log("esto"+respuesta);
         };
     };
     </script>

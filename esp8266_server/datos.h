@@ -189,6 +189,7 @@ const String Pagina =  R"====(<!DOCTYPE html>
         var vlrSirena=Sirena.checked;
         if(vlrSirena){
           vlrSirena="lon";
+          z1.style="background-color:green";
         }else{
           vlrSirena="lof";
         }
@@ -203,6 +204,11 @@ const String Pagina =  R"====(<!DOCTYPE html>
         }
         consultaGET(vlrReflector);
     });
+    function cambiocolor (){
+      if (respuesta=="verde"){
+        z1.style="background-color:green";
+      }
+    };
     function consultaGET(consulta){
         const Http = new XMLHttpRequest();
         console.log(`Consultando  ${consulta}`)

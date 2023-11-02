@@ -89,7 +89,7 @@ void setup() {
 
   server.on("/", mensajeBase);
   server.on("/lon",[](){Serial.println("Lampara On");});
-  server.on("/lof",[](){Serial.println("Lampara Off");});
+  server.on("/lof",[](){Serial.println("Lampara Off");server.send(200, "text/plain","verde");});
   server.on("/ron",[](){Estado=1;});
   server.on("/rof",lamparaReflector);
   
@@ -106,19 +106,6 @@ void loop() {
 }
 void lamparaReflector(){
   
-  /*
-  Estado=server.on();
-  switch (Estado) {
-  case "lon":
-    Serial.println("lamp ON");
-    break;
-  case "lof":
-    Serial.println("lamp Off");
-    break;
-  } 
-  
-  server.send(200,"text/plain","Enciendo lampara");
-*/
 }
 
 
