@@ -88,10 +88,11 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   server.on("/", mensajeBase);
-  server.on("/lon",[](){Serial.println("Lampara On");});
-  server.on("/lof",[](){Serial.println("Lampara Off");server.send(200, "text/plain","verde");});
-  server.on("/ron",[](){Estado=1;});
-  server.on("/rof",lamparaReflector);
+  server.on("/lon",[](){Serial.print(1);});
+  //server.on("/lof",[](){Serial.println("log");server.send(200, "text/plain","verde");});
+  server.on("/lof",[](){Serial.print(2);});
+  server.on("/ron",[](){Serial.print(3);});
+  server.on("/rof",[](){Serial.print(4);});
   
   server.on("/valor", mensajeArgumento);
 
