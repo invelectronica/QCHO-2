@@ -1,7 +1,7 @@
 const char* ssid_1     = "ARRIS-3535";
 const char* password_1 = "50A5DC443535";
 
-const String Pagina =  R"====(<!DOCTYPE html>
+String Pagina =  R"====(<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -159,7 +159,7 @@ const String Pagina =  R"====(<!DOCTYPE html>
       </div>
       <div class="cajaAlarmas" >
         <div class="cajaPpal">
-          <button id="z1" >Zona 1</button>  
+          <button id="z1">Zona 1</button>  
           <button id="z2">Zona 2</button>
           <button id="z3">Zona 3</button>
           <button id="z4">Zona 4</button>
@@ -178,23 +178,23 @@ const String Pagina =  R"====(<!DOCTYPE html>
         <a href="https://invelectronica.com/seguridad-perimetral/" target="_blank" rel="noreferrer noopener" style="font-size: 25px;color: rgb(64, 131, 233);text-shadow: 3px 3px 4px #000000;">www.invelectronica.com</a>
       </div>
       <p>Modelo Q-CH0-2 / 2023 </p>
+      <p id=msg style="display:none;">{variable}</p>
   </div>
   </center>
+  
     <script>
+      var variableGlobal;
       const Sirena = document.querySelector("#sirena2");
       const Reflector = document.querySelector("#reflector2");
-      const z1=document.querySelector("#z1");
-      
       Sirena.addEventListener("click",function(){
         var vlrSirena=Sirena.checked;
         if(vlrSirena){
           vlrSirena="lon";
-          z1.style="background-color:green";
         }else{
           vlrSirena="lof";
         }
         consultaGET(vlrSirena);
-    });
+      });
       Reflector.addEventListener("click",function(){
         var vlrReflector=Reflector.checked;  
         if(vlrReflector){
@@ -203,23 +203,43 @@ const String Pagina =  R"====(<!DOCTYPE html>
           vlrReflector="rof"  
         }
         consultaGET(vlrReflector);
-    });
-    function cambiocolor (){
-      if (respuesta=="verde"){
+      });
+
+      function cambiocolor (){
         z1.style="background-color:green";
       }
-    };
-    function consultaGET(consulta){
-        const Http = new XMLHttpRequest();
-        console.log(`Consultando  ${consulta}`)
-        Http.open("GET", consulta);
-        Http.send();
-
-        Http.onreadystatechange = (e) => {
-          console.log(Http.status );
-          console.log(Http.responseText);
+  
+    function ejecutarAjax(url, callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                callback(this.responseText);
+            }
         };
-    };
-    </script>
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
+    function consultaGET(consulta) {
+        ejecutarAjax(consulta, function(responseText) {
+            /*document.getElementById("valorVariable").innerHTML = responseText;*/
+            console.log(Http.responseText);
+        });
+    }
+    function actualizarVariable() {
+        ejecutarAjax("/alarma", function(responseText) {
+            document.getElementById("msg").innerHTML = responseText;
+            variableGlobal=responseText;
+            if(variableGlobal==="11"){
+              z1.style="background-color:green";
+            }else{
+              z1.style="";
+            }
+        });
+    }
+    // Actualizar la variable cada 5000 milisegundos (5 segundos)
+    setInterval(actualizarVariable, 10000);    
+
+   </script>
+  
   </body>
 </html>)====";

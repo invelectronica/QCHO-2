@@ -6,12 +6,15 @@
 byte val;
 byte refle;
 byte z1;
+byte bandera;
 
 void setup() {
   Serial.begin(115200);
   pinMode(led,OUTPUT);
   pinMode(sirena,OUTPUT);
   pinMode(swiche,INPUT_PULLUP);
+
+  bandera=0;
 }
 
 void loop() {
@@ -33,12 +36,19 @@ if(Serial.available()){
     case 52:
       digitalWrite(sirena, 0);
       break;
-  }
-
-  
-
-  
+  }  
 }
+  z1=digitalRead(swiche);
+
+  if(z1==1 && bandera==1){
+    Serial.println("11");
+    bandera=0;
+    delay(1000);
+  }else if(z1==0 && bandera==0){
+    Serial.println("10");
+    bandera=1;
+    delay(1000);
+  }
 
 
 
