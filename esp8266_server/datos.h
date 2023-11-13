@@ -159,17 +159,17 @@ String Pagina =  R"====(<!DOCTYPE html>
       </div>
       <div class="cajaAlarmas" >
         <div class="cajaPpal">
-          <button id="z1">Zona 1</button>  
-          <button id="z2">Zona 2</button>
-          <button id="z3">Zona 3</button>
-          <button id="z4">Zona 4</button>
+          <button id="Z1">Zona 1</button>  
+          <button id="Z2">Zona 2</button>
+          <button id="Z3">Zona 3</button>
+          <button id="Z4">Zona 4</button>
         </div>
         <br>
         <div class="cajaPpal">
-            <button id="z5">Zona 5</button>  
-            <button id="z6">Zona 6</button>
-            <button id="z7">Zona 7</button>
-            <button id="z8">Zona 8</button>
+            <button id="Z5">Zona 5</button>  
+            <button id="Z6">Zona 6</button>
+            <button id="Z7">Zona 7</button>
+            <button id="Z8">Zona 8</button>
           </div>
       </div>
       <br>
@@ -178,7 +178,7 @@ String Pagina =  R"====(<!DOCTYPE html>
         <a href="https://invelectronica.com/seguridad-perimetral/" target="_blank" rel="noreferrer noopener" style="font-size: 25px;color: rgb(64, 131, 233);text-shadow: 3px 3px 4px #000000;">www.invelectronica.com</a>
       </div>
       <p>Modelo Q-CH0-2 / 2023 </p>
-      <p id=msg style="display:none;">{variable}</p>
+      <p id=msg >{variable}</p>
   </div>
   </center>
   
@@ -186,16 +186,19 @@ String Pagina =  R"====(<!DOCTYPE html>
       var variableGlobal;
       const Sirena = document.querySelector("#sirena2");
       const Reflector = document.querySelector("#reflector2");
-      Sirena.addEventListener("click",function(){
-        var vlrSirena=Sirena.checked;
+      const Z1=document.querySelector("#Z1");
+
+      Sirena.addEventListener("click",()=>{
+      var vlrSirena=Sirena.checked;    
         if(vlrSirena){
           vlrSirena="lon";
+          Z1.style="";
         }else{
           vlrSirena="lof";
         }
         consultaGET(vlrSirena);
       });
-      Reflector.addEventListener("click",function(){
+      Reflector.addEventListener("click",()=>{
         var vlrReflector=Reflector.checked;  
         if(vlrReflector){
           vlrReflector="ron"
@@ -204,12 +207,8 @@ String Pagina =  R"====(<!DOCTYPE html>
         }
         consultaGET(vlrReflector);
       });
-
-      function cambiocolor (){
-        z1.style="background-color:green";
-      }
   
-    function ejecutarAjax(url, callback) {
+      function ejecutarAjax(url, callback) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -221,20 +220,38 @@ String Pagina =  R"====(<!DOCTYPE html>
     }
     function consultaGET(consulta) {
         ejecutarAjax(consulta, function(responseText) {
-            /*document.getElementById("valorVariable").innerHTML = responseText;*/
             console.log(Http.responseText);
         });
     }
+
     function actualizarVariable() {
+       var elementos = document.querySelectorAll('button');
+       var Texto = 'Z';
+
+
         ejecutarAjax("/alarma", function(responseText) {
-            document.getElementById("msg").innerHTML = responseText;
+        document.getElementById("msg").innerHTML = responseText;
+        
             variableGlobal=responseText;
-            if(variableGlobal==="11"){
-              z1.style="background-color:green";
-            }else{
-              z1.style="";
-            }
+           // console.log("variable global: ",variableGlobal);
+            elementos.forEach(function(elemento) {
+           
+              
+              if((Texto+variableGlobal)==="Z3"){
+                console.log(Texto+variableGlobal);
+                Z1.style="background-color:green";
+              }else{
+                Z1.Style="";
+              }
+            });
+
+            /*const miEntero=parseInt(variableGlobal);
+            constmiByte= new Uint8Array([miEntero]);
+            console.log("String:", miString);
+            console.log("Entero:", miEntero);
+            console.log("Byte:", miByte);*/
         });
+      
     }
     // Actualizar la variable cada 5000 milisegundos (5 segundos)
     setInterval(actualizarVariable, 10000);    

@@ -19,7 +19,7 @@
 #endif
 
 byte Estado; //= false;
-byte ZAlarm=5;
+int ZAlarm= random(1, 9);
 byte ZAlarm1=20;
 int  timeAnt;
 const uint32_t TiempoEsperaWifi = 5000;
@@ -34,6 +34,7 @@ IPAddress gateway(192,168,0,1);
 IPAddress subnet(255,255,255,0);
 
 void setup() {
+    randomSeed(analogRead(0));
   Serial.begin(115200);
   debugln("\nIniciando Wifi");
   WiFi.begin(ssid_1, password_1);
@@ -68,7 +69,10 @@ void loop() {
   server.handleClient();
   
   if(millis()-timeAnt>=8000){
-    ZAlarm+=1;
+    randomSeed(analogRead(0));
+    ZAlarm=random(1, 9);;
+    Serial.print("ZAlarm: ");
+    Serial.println(ZAlarm);
     timeAnt=millis();
   }
 }
