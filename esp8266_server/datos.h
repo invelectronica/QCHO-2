@@ -159,17 +159,17 @@ String Pagina =  R"====(<!DOCTYPE html>
       </div>
       <div class="cajaAlarmas" >
         <div class="cajaPpal">
-          <button id="Z1">Zona 1</button>  
-          <button id="Z2">Zona 2</button>
-          <button id="Z3">Zona 3</button>
-          <button id="Z4">Zona 4</button>
+          <button id="1">Zona 1</button>  
+          <button id="2">Zona 2</button>
+          <button id="3">Zona 3</button>
+          <button id="4">Zona 4</button>
         </div>
         <br>
         <div class="cajaPpal">
-            <button id="Z5">Zona 5</button>  
-            <button id="Z6">Zona 6</button>
-            <button id="Z7">Zona 7</button>
-            <button id="Z8">Zona 8</button>
+            <button id="5">Zona 5</button>  
+            <button id="6">Zona 6</button>
+            <button id="7">Zona 7</button>
+            <button id="8">Zona 8</button>
           </div>
       </div>
       <br>
@@ -182,81 +182,68 @@ String Pagina =  R"====(<!DOCTYPE html>
   </div>
   </center>
   
-    <script>
-      var variableGlobal;
-      const Sirena = document.querySelector("#sirena2");
-      const Reflector = document.querySelector("#reflector2");
-      const Z1=document.querySelector("#Z1");
-
-      Sirena.addEventListener("click",()=>{
-      var vlrSirena=Sirena.checked;    
-        if(vlrSirena){
-          vlrSirena="lon";
-          Z1.style="";
-        }else{
-          vlrSirena="lof";
-        }
-        consultaGET(vlrSirena);
-      });
-      Reflector.addEventListener("click",()=>{
-        var vlrReflector=Reflector.checked;  
-        if(vlrReflector){
-          vlrReflector="ron"
-        }else{
-          vlrReflector="rof"  
-        }
-        consultaGET(vlrReflector);
-      });
+  <script>
+  var variableGlobal;
+  const Sirena = document.querySelector("#sirena2");
+  const Reflector = document.querySelector("#reflector2");
   
-      function ejecutarAjax(url, callback) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                callback(this.responseText);
-            }
-        };
-        xhttp.open("GET", url, true);
-        xhttp.send();
+  Sirena.addEventListener("click",()=>{
+  var vlrSirena=Sirena.checked;    
+    if(vlrSirena){
+      vlrSirena="lon";
+    }else{
+      vlrSirena="lof";
     }
-    function consultaGET(consulta) {
-        ejecutarAjax(consulta, function(responseText) {
-            console.log(Http.responseText);
-        });
-    }
-
-    function actualizarVariable() {
-       var elementos = document.querySelectorAll('button');
-       var Texto = 'Z';
-
-
-        ejecutarAjax("/alarma", function(responseText) {
-        document.getElementById("msg").innerHTML = responseText;
-        
-            variableGlobal=responseText;
-           // console.log("variable global: ",variableGlobal);
-            elementos.forEach(function(elemento) {
-           
-              
-              if((Texto+variableGlobal)==="Z3"){
-                console.log(Texto+variableGlobal);
-                Z1.style="background-color:green";
-              }else{
-                Z1.Style="";
-              }
-            });
-
-            /*const miEntero=parseInt(variableGlobal);
-            constmiByte= new Uint8Array([miEntero]);
-            console.log("String:", miString);
-            console.log("Entero:", miEntero);
-            console.log("Byte:", miByte);*/
-        });
-      
-    }
-    // Actualizar la variable cada 5000 milisegundos (5 segundos)
-    setInterval(actualizarVariable, 10000);    
-
-   </script>
+    consultaGET(vlrSirena);
+  });
   
+  Reflector.addEventListener("click",()=>{
+  var vlrReflector=Reflector.checked;  
+    if(vlrReflector){
+      vlrReflector="ron"
+    }else{
+      vlrReflector="rof"  
+    }
+    consultaGET(vlrReflector);
+  });
+  
+  function ejecutarAjax(url, callback) {
+  //creamos elemento XMLHttpRequest 
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        callback(this.responseText);
+      }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+  }
+  
+  function consultaGET(consulta) {
+    ejecutarAjax(consulta, function(responseText) {
+      console.log(Http.responseText);
+    });
+  }
+
+  function actualizarVariable() {
+  var elementos = document.querySelectorAll('button');
+    ejecutarAjax("/alarma", function(responseText) {
+    //obtenemos variable del server
+    document.getElementById("msg").innerHTML = responseText;
+    variableGlobal=responseText;     
+      elementos.forEach(function(elemento) {      
+        console.log("elemento: ",elemento.id); 
+        if(variableGlobal===elemento.id){
+          document.getElementById(elemento.id).style="background-color:#d1dad3";
+        }else{
+          document.getElementById(elemento.id).Style="";
+        }
+      });
+    });  
+  }
+  // Actualizar la variable cada 5000 milisegundos (5 segundos)
+  setInterval(actualizarVariable, 10000);    
+
+  </script>
   </body>
 </html>)====";
