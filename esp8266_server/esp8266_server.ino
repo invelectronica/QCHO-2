@@ -23,10 +23,12 @@ int ZAlarm= random(1, 9);
 byte ZAlarm1=20;
 int  timeAnt;
 const uint32_t TiempoEsperaWifi = 5000;
-
+bool actualizacionEnviada = false;
+String datoSerial = "";
 unsigned long TiempoActual = 0;
 unsigned long TiempoAnterior = 0;
 const long TiempoCancelacion = 500;
+  int ZAlarm2=0;
 
 ESP8266WebServer server(80);
 IPAddress ip(192,168,0,100);     
@@ -56,21 +58,29 @@ void setup() {
   server.on("/lof",[](){Serial.println(2);});
   server.on("/ron",[](){Serial.println(3);});
   server.on("/rof",[](){Serial.println(4);});
-  server.on("/alarma", HTTP_GET, handleObtenerVariable);
+  //server.on("/alarma", HTTP_GET, handleObtenerVariable);
+  server.on("/alarma", HTTP_GET, []() {
+        // Lógica para enviar los datos disponibles en el puerto serial al cliente web
+        if (ZAlarm!=ZAlarm2) {
+            server.send(200, "text/plain", String(ZAlarm));              
+            ZAlarm2=ZAlarm;
+        } else {
+            server.send(200, "text/plain", "no-actualizado");
+        }
+    });
   server.onNotFound(mensajeError);
-
   server.begin();
   Serial.println("Servidor iniciado"); 
-
   timeAnt=millis();
 }
 
 void loop() {
   server.handleClient();
   
+ 
   if(millis()-timeAnt>=8000){
     randomSeed(analogRead(0));
-    ZAlarm=random(1, 9);;
+    ZAlarm=random(1, 19);;
     Serial.print("ZAlarm: ");
     Serial.println(ZAlarm);
     timeAnt=millis();

@@ -159,17 +159,17 @@ String Pagina =  R"====(<!DOCTYPE html>
       </div>
       <div class="cajaAlarmas" >
         <div class="cajaPpal">
-          <button id="1">Zona 1</button>  
-          <button id="2">Zona 2</button>
-          <button id="3">Zona 3</button>
-          <button id="4">Zona 4</button>
+          <button id="11">Zona 1</button>  
+          <button id="12">Zona 2</button>
+          <button id="13">Zona 3</button>
+          <button id="14">Zona 4</button>
         </div>
         <br>
         <div class="cajaPpal">
-            <button id="5">Zona 5</button>  
-            <button id="6">Zona 6</button>
-            <button id="7">Zona 7</button>
-            <button id="8">Zona 8</button>
+            <button id="15">Zona 5</button>  
+            <button id="16">Zona 6</button>
+            <button id="17">Zona 7</button>
+            <button id="18">Zona 8</button>
           </div>
       </div>
       <br>
@@ -183,10 +183,12 @@ String Pagina =  R"====(<!DOCTYPE html>
   </center>
   
   <script>
-  var variableGlobal;
+  let delServer;
+  let varButton;
+  
   const Sirena = document.querySelector("#sirena2");
   const Reflector = document.querySelector("#reflector2");
-  
+
   Sirena.addEventListener("click",()=>{
   var vlrSirena=Sirena.checked;    
     if(vlrSirena){
@@ -230,19 +232,33 @@ String Pagina =  R"====(<!DOCTYPE html>
     ejecutarAjax("/alarma", function(responseText) {
     //obtenemos variable del server
     document.getElementById("msg").innerHTML = responseText;
-    variableGlobal=responseText;     
-      elementos.forEach(function(elemento) {      
-        console.log("elemento: ",elemento.id); 
-        if(variableGlobal===elemento.id){
-          document.getElementById(elemento.id).style="background-color:#d1dad3";
-        }else{
-          document.getElementById(elemento.id).Style="";
+    varButton=responseText;
+    if (varButton>=11 && varButton<=18){
+      elementos.forEach(function(elemento) {  
+        //console.log("elemento.id: ",elemento.id, "variable: ",varButton);
+        if(varButton==elemento.id){
+          //console.log("Ya entre..");
+          document.getElementById(elemento.id).style.backgroundColor="#d1dad3";
         }
       });
-    });  
+    }else if(varButton>=1 && varButton<=8){  
+      console.log("entre 1 y 8");
+      elementos.forEach(function(elemento) {  
+        const boton = document.getElementById(elemento.id);    
+        let textButton=boton.textContent || boton.innerText;
+        console.log("texto en boton ",textButton);
+        if(textButton.includes(varButton)){
+          console.log("Reviso texto..");
+          document.getElementById(elemento.id).style.backgroundColor="#424242";
+        }
+      });
+    }
+    }); 
   }
+
+    
   // Actualizar la variable cada 5000 milisegundos (5 segundos)
-  setInterval(actualizarVariable, 10000);    
+  setInterval(actualizarVariable, 5000);    
 
   </script>
   </body>
