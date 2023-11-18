@@ -137,7 +137,7 @@
       <div class="container0" >
         <div class="switch-holder">
             <div class="switch-label">
-                <p>Sirena</p>
+                <p>Reflector</p>
             </div>
             <div class="switch-toggle">
               <input type="checkbox" id="sirena2">
@@ -146,7 +146,7 @@
         </div>
         <div class="switch-holder">
             <div class="switch-label">
-                <p>Reflector</p>
+                <p>Sirena</p>
             </div>
             <div class="switch-toggle">
                 <input type="checkbox" id="reflector2">
@@ -185,7 +185,28 @@
   
   const Sirena = document.querySelector("#sirena2");
   const Reflector = document.querySelector("#reflector2");
+//de aca codigo nuevo
+ // Hacer una solicitud GET al endpoint "/valor-eeprom"
+ window.onload = function() {
+    // Obtener el valor de la EEPROM del contenido de la página
+    var valorEeprom = parseInt(document.body.textContent);
 
+      //valorEeprom = parseInt(valorEeprom); // Convertir el valor a un número
+
+      for (var i = 11; i <= 18; i++) {
+        var boton = document.getElementById(i.toString());
+        if (valorEeprom & (1 << (i - 11))) {
+          // Si el bit correspondiente en valorEeprom es 1, cambia el color del botón a verde
+          boton.style.backgroundColor = "#d1dad3";
+        } else {
+          // Si el bit correspondiente en valorEeprom es 0, cambia el color del botón a rojo
+          boton.style.backgroundColor = "#424242";
+        }
+      }
+    };
+ 
+
+//hasta aca
   Sirena.addEventListener("click",()=>{
   var vlrSirena=Sirena.checked;    
     if(vlrSirena){
@@ -230,7 +251,25 @@
     //obtenemos variable del server
     document.getElementById("msg").innerHTML = responseText;
     varButton=responseText;
-    if (varButton>=11 && varButton<=18){
+    
+    //varButton = parseInt(document.body.textContent);
+
+    // Ahora puedes usar valorEeprom en tu código
+    for (var i = 11; i <= 18; i++) {
+      var boton = document.getElementById(i.toString());
+      console.log("varButton: ",varButton," var boton: ",boton);
+      if (varButton & (1 << (i - 11))) {
+        // Si el bit correspondiente en valorEeprom es 1, cambia el color del botón a verde
+        boton.style.backgroundColor = "#d1dad3";
+      } else {
+        // Si el bit correspondiente en valorEeprom es 0, cambia el color del botón a rojo
+        boton.style.backgroundColor = "#424242";
+      }
+    }
+    
+    
+    
+    /*if (varButton>=11 && varButton<=18){
       elementos.forEach(function(elemento) {  
         //console.log("elemento.id: ",elemento.id, "variable: ",varButton);
         if(varButton==elemento.id){
@@ -250,10 +289,12 @@
         }
       });
     }
-    }); 
+    });*/
+  
+    });
   }
-
     
+
   // Actualizar la variable cada 5000 milisegundos (5 segundos)
   setInterval(actualizarVariable, 5000);    
 
